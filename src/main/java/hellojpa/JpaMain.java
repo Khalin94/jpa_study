@@ -22,15 +22,15 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member memberA = new Member(10L, "MemberA");
-            em.persist(memberA); // 영속성 컨텍스트에 먼저 저장한다..
+            Member memberA = new Member(100L, "MemberA");
+            Member memberB = new Member(101L, "MemberB");
 
-            // 1차 캐시를 사용하여 데이터를 가지고 오기 때문에 findMemberA와 findMemberA2는 같다 (findMemberA == findMemberB)
-            // 같은 id로 가지고 온 데이터에 대한 동일성이 보장된다.
-            Member findMemberA = em.find(Member.class, 10L);
-            Member findMemberA2 = em.find(Member.class, 10L);
-
-            System.out.println("is true? " + (findMemberA == findMemberA2));
+            // 트랜잭션을 지원하는 쓰기 지연
+            // persist()시 db로 insert Query가 나가지 않고 persistence context에 저장된다.
+            // commit()시 db로 insert Query를 모아서 한번에 보낸다.
+            em.persist(memberA);
+            em.persist(memberB);
+            System.out.println("===============================");
 
             tx.commit(); // 커밋 시 insert 쿼리가 나간다.
         }catch (Exception e){
