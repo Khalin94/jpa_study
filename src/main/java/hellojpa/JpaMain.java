@@ -29,8 +29,22 @@ public class JpaMain {
             // member에 저장 (persist)
             em.persist(member);
             */
+
+            /*
+            // 비영속(new)
             Member findMember = em.find(Member.class, 1L);
             System.out.println("find member : " + findMember.getName());
+
+            // 영속(persist)
+            Member member = new Member(10L, "newMember");
+            em.persist(member);
+
+            // 준영속(detach)
+            em.detach(member);
+
+            // 삭제(remove)
+            em.remove(member);
+            */
 
             /**
              * JPQL
@@ -54,7 +68,7 @@ public class JpaMain {
 
             // db 업데이트 시 굳이 persist()를 안써도 된다.
             // 설계가 컬렉션을 다루는 것 처럼 되어 있다.
-            findMember.setName("helloJPA");
+//            findMember.setName("helloJPA");
 
             tx.commit();
         }catch (Exception e){
