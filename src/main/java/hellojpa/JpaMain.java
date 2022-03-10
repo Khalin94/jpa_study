@@ -27,6 +27,11 @@ public class JpaMain {
             // update()가 따로 없는 이유는 jpa는 데이터를 java Collection 과 비슷하게 객체를 컨트롤하는 것이 컨셉이기 때문이다.(객체 지향적?)
 //            Member member = em.find(Member.class, 100L);
 //            member.setName("MemberC");
+            Member member = new Member();
+            member.setName("jpa");
+            member.setAge(20);
+
+            em.persist(member);
 
             tx.commit(); // 커밋 시 insert 쿼리가 나간다.
         }catch (Exception e){

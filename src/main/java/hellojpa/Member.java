@@ -4,40 +4,48 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-//@Table("USER") 관례에 따라 클래스 이름과 같은 테이블에 자동으로 매핑이 되지만
-// 실제 DB 테이블과 이름이 다를 경우 @Table Annotation을 사용하면 된다.
+@SequenceGenerator(
+        name = "MEMBER_SEQ_GENERATOR", // SequenceGenerator 이름
+        sequenceName = "MEMBER_SEQ", // 매핑할 시퀀스 이름
+        initialValue = 1, allocationSize = 1
+)
 public class Member {
 
+    // GeneratedValue가 없으면 id를 직접 할당해야됨.
+    //@GeneratedValue(strategy = GenerationType.AUTO)  // GenerationType.AUTO는 db에 맞게 auto_increase, sequence 등등 맞는 인덱스를 넣어준다.
     @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increase h2 2.x 버전에서 버그가 있어서 자동으로 생성이 안된다...
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE) // sequenceGenerator를 주지 않으면 시퀀스가 자동생성 된다. (이름을 정할 수 없다.)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "MEMBER_SEQ_GENERATOR" // SequenceGenerator(매핑) 이름을 준다.
+    )
     private Long id;
 
-    // 실제 DB컬럼의 이름과 class의 필드 이름이 다를 경우 name 속성을 사용한다.
-    // 실제 DB컬럼의 이름이 name일 경우
-    @Column(name = "name")
-    private String username;
+    private String name;
 
-    // int가 아닌 Integer여도 JPA가 알아서 적절한 DB타입으로 선택한다.
-    private Integer age;
+    private int age;
 
-    // enum 타입일 경우
-    @Enumerated(EnumType.STRING)
-    private RoleType roleType;
+    public Long getId() {
+        return id;
+    }
 
-    // TemporalType의 경우 DATE, TIME, TIMESTAMP 3가지가 있는데 이는 DB타입이 나눠져 있어서 그렇다.
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
+    public String getName() {
+        return name;
+    }
 
-    // blob이나 clob 처럼 varchar를 넘어서는 데이터가 들어가야 할 때 해당 annotation을 사용한다.
-    @Lob
-    private String description;
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    // 실제 DB에는 없고 프로그램 내에서 사용할 때
-    @Transient
-    private String temp;
+    public int getAge() {
+        return age;
+    }
 
-
-
+    public void setAge(int age) {
+        this.age = age;
+    }
 }
