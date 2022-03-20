@@ -4,15 +4,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@TableGenerator(
-        name = "MEMBER_SEQ_GENERATOR",
-        table = "MY_SEQUENCES",
-        pkColumnValue = "MEMBER_SEQ", allocationSize = 1
-) // sequence mapping 테이블을 만들 수 있다.
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "MEMBER_SEQ_GENERATOR") // table sequence
+//    @GeneratedValue(strategy = GenerationType.TABLE, generator = "MEMBER_SEQ_GENERATOR") // table sequence
+    @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
 
@@ -20,8 +16,13 @@ public class Member {
     private String name;
 
     // 테이블에 맞춰 외래키 자체를 가지고 오는 경우 (객체지향적이지 못하다)
-    @Column(name = "TEAM_ID")
-    private Long teamId;
+//    @Column(name = "TEAM_ID")
+//    private Long teamId;
+
+    // 연관관계를 통해 데이터를 가지고 오는경우(객체 자체를 사용)
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
 
     public Long getId() {
         return id;
@@ -39,11 +40,11 @@ public class Member {
         this.name = name;
     }
 
-    public Long getTeamId() {
-        return teamId;
+    public Team getTeam() {
+        return team;
     }
 
-    public void setTeamId(Long teamId) {
-        this.teamId = teamId;
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
