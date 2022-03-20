@@ -22,16 +22,22 @@ public class JpaMain {
         tx.begin();
 
         try {
-            // 변경감지(Dirty Checking)
-            // jpa에서는 따로 update()가 없고 해당 객체의 데이터가 변경되면 commit()시 자동으로 update쿼리를 생성한다.
-            // update()가 따로 없는 이유는 jpa는 데이터를 java Collection 과 비슷하게 객체를 컨트롤하는 것이 컨셉이기 때문이다.(객체 지향적?)
-//            Member member = em.find(Member.class, 100L);
-//            member.setName("MemberC");
-            Member member = new Member();
-            member.setName("jpa");
-            member.setAge(20);
 
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team); // persist()를 하면 영속성 컨텍스트에서 관리하여 pk를 만드므로 밑에서 처럼 바로 사용가능하다.
+
+            Member member = new Member();
+            member.setName("member1");
+            member.setTeamId(team.getId());
             em.persist(member);
+
+            // 테이블을 기준으로 객체를 생성하면 해당 객체를 가지고오기위해 외래키를 가지고와 찾아야한다.(객체 자체를 참조하는 것이 아니다.)
+            Member findMember = em.find(Member.class, member.getId());
+            Long teamId = findMember.getTeamId();
+            Team findTeam = em.find(Team.class, teamId);
+
+
 
             tx.commit(); // 커밋 시 insert 쿼리가 나간다.
         }catch (Exception e){

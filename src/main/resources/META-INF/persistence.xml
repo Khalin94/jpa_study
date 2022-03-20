@@ -19,7 +19,7 @@
                 value에는 create, create-drop, update, validate, none이 있다.
                 운영에서는 절대 create, create-drop, update를 사용해서는 안된다!
             -->
-            <!--<property name="hibernate.hbm2ddl.auto" value="create"/>-->
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
     </persistence-unit>
                       
