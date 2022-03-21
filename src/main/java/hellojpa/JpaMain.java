@@ -35,6 +35,9 @@ public class JpaMain {
             member.setTeam(team);
             em.persist(member);
 
+            em.flush();
+            em.clear();
+
             // 테이블을 기준으로 객체를 생성하면 해당 객체를 가지고오기위해 외래키를 가지고와 찾아야한다.(객체 자체를 참조하는 것이 아니다.)
 //            Member findMember = em.find(Member.class, member.getId());
 //            Long teamId = findMember.getTeamId();
@@ -43,13 +46,13 @@ public class JpaMain {
 
             //연관관계를 통해 객체를 가지고 오는경우(객체지향적이다.)
             Member findMember = em.find(Member.class, member.getId());
-            Team findTeam = findMember.getTeam();
+            // 멤버에서 팀을 가지고 올 수도 있고 팀에서 멤버를 가지고 올 수도 있다 (양방향 연관관계)
+            List<Member> findTeam = findMember.getTeam().getMembers();
 
-            System.out.println("team :: " + findTeam.toString());
+            for (Member m : findTeam) {
+                System.out.println("member :: " + m.getName());
+            }
 
-            // 아래처럼 setter만 만들고 commit()을 날려주면 jpa에서 update를 자동으로 날려준다.(컬렉션처럼 사용함.)
-            findTeam.setName("dddd");
-            findMember.setTeam(findTeam);
 
 
 
