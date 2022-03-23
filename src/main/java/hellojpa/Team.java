@@ -19,6 +19,10 @@ public class Team {
     @OneToMany(mappedBy = "team") // member와의 연관관계에서 참조되는 변수명을 써줌.
     private List<Member> members = new ArrayList<>(); // arrayList를 생성해주는건 관례임.. (npe 방지)
 
+    public void addMember(Member member) {
+        member.setTeam(this);
+        members.add(member);
+    }
 
     public Long getId() {
         return id;
@@ -51,4 +55,6 @@ public class Team {
     public void setMembers(List<Member> members) {
         this.members = members;
     }
+
+
 }

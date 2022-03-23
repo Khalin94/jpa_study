@@ -32,29 +32,32 @@ public class JpaMain {
 
             Member member = new Member();
             member.setName("member1");
-            member.setTeam(team);
+            // 양방향 매핑 시 객체에 데이터를 넣어주기 위한 방법2 set 할 때 넣어준다.
+            member.changeTeam(team);
             em.persist(member);
 
-            em.flush();
-            em.clear();
+            // 객체지향적으로 생각했을 때 team과 member 모두 넣어주는 것이 맞다... ( add를 안해줘도 db에 값은 업데이트 된다.)
+            // 또한 flush나 clear를 하지 않을 경우 add 없이 가지고 오면 1차 캐시에만 값이 있으므로 team.getMembers() 에 값이 없게 된다.
+            // 양방향 매핑 시 객체에 데이터를 넣어주기 위한 방법1 데이터를 불러와 add 해준다.
+            // team.getMembers().add(member);
 
-            // 테이블을 기준으로 객체를 생성하면 해당 객체를 가지고오기위해 외래키를 가지고와 찾아야한다.(객체 자체를 참조하는 것이 아니다.)
-//            Member findMember = em.find(Member.class, member.getId());
-//            Long teamId = findMember.getTeamId();
-//            Team findTeam = em.find(Team.class, teamId);
+            // 양방향 매핑 시 객체에 데이터를 넣어주기 위한 방법3 add 메서드를 만들어서 넣어준다.
+            //team.addMember(member);
 
+//            em.flush();
+//            em.clear();
 
             //연관관계를 통해 객체를 가지고 오는경우(객체지향적이다.)
             Member findMember = em.find(Member.class, member.getId());
             // 멤버에서 팀을 가지고 올 수도 있고 팀에서 멤버를 가지고 올 수도 있다 (양방향 연관관계)
             List<Member> findTeam = findMember.getTeam().getMembers();
 
+            // flush, clear 를 하지 않고 Members에도 값을 넣지 않으면 1차 캐시에만 값이 있으므로 member 값을 가지고 오지 못한다.
+            System.out.println("===========================");
             for (Member m : findTeam) {
                 System.out.println("member :: " + m.getName());
             }
-
-
-
+            System.out.println("===========================");
 
             tx.commit(); // 커밋 시 insert 쿼리가 나간다.
         }catch (Exception e){
