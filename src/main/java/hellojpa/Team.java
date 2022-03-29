@@ -20,7 +20,7 @@ public class Team {
     // persist 시 값을 업데이트 시켜주기 때문에 사용이 권장되지는 않음.. DB 테이블이 많을 시 헷갈린다.
     // update를 한번 더 날려야되기 때문에 비용도 증가함.
     @OneToMany
-    @JoinColumn(name = "TEAM_ID")
+//    @JoinColumn(name = "TEAM_ID")  @JoinColumn을 사용하지 않으면 Mapping table이 생성된다
     List<Member> members = new ArrayList<>();
 
     public Long getId() {
