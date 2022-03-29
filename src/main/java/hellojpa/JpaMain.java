@@ -25,15 +25,14 @@ public class JpaMain {
 
             System.out.println("start >> ");
 
+            Locker locker = new Locker();
+            locker.setName("LOCKER1");
+            em.persist(locker);
+
             Member member = new Member();
-            member.setName("member1");
+            member.setName("MEBER1");
+            member.setLocker(locker);
             em.persist(member);
-
-            Team team = new Team();
-            team.setName("Team1");
-            team.getMembers().add(member);
-            em.persist(team);
-
 
             tx.commit(); // 커밋 시 insert 쿼리가 나간다.
         }catch (Exception e){

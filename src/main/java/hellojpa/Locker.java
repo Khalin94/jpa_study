@@ -1,18 +1,16 @@
 package hellojpa;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
-public class Team {
+public class Locker {
 
     @Id
     @GeneratedValue
-    @Column(name = "TEAM_ID")
     private Long id;
 
-    @Column(name = "NAME")
     private String name;
 
     public Long getId() {
@@ -30,5 +28,4 @@ public class Team {
     public void setName(String name) {
         this.name = name;
     }
-
 }
