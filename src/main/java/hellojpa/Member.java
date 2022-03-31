@@ -23,19 +23,15 @@ public class Member {
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
 
-    // 다대다 단방향 연관관계
-    // 다대다는 사용을 권장하지 않는다.
-    // 객체의 경우 List로 연결이 가능하지만 DB에는 Mapping table이 생성된다.
-    @ManyToMany
-    @JoinTable(name = "MEMBER_PRODUCT")
-    private List<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy = "member")
+    private List<MemberProduct> memberProduct;
 
-    public List<Product> getProducts() {
-        return products;
+    public List<MemberProduct> getMemberProduct() {
+        return memberProduct;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setMemberProduct(List<MemberProduct> memberProduct) {
+        this.memberProduct = memberProduct;
     }
 
     public Long getId() {

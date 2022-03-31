@@ -14,16 +14,15 @@ public class Product {
     @Column(name = "NAME")
     private String name;
 
-    //다대다 양방향 연관관계 매핑
-    @ManyToMany(mappedBy = "products")
-    private List<Member> members = new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    private List<MemberProduct> memberProducts= new ArrayList<>();
 
-    public List<Member> getMembers() {
-        return members;
+    public List<MemberProduct> getMemberProducts() {
+        return memberProducts;
     }
 
-    public void setMembers(List<Member> members) {
-        this.members = members;
+    public void setMemberProducts(List<MemberProduct> memberProducts) {
+        this.memberProducts = memberProducts;
     }
 
     public Long getId() {
