@@ -25,13 +25,15 @@ public class JpaMain {
 
             System.out.println("start >> ");
 
-            Locker locker = new Locker();
-            locker.setName("LOCKER1");
-            em.persist(locker);
+            Product product = new Product();
+            product.setName("product1");
+
+            em.persist(product);
 
             Member member = new Member();
-            member.setName("MEBER1");
-            member.setLocker(locker);
+            member.setName("Member1");
+            member.getProducts().add(product);
+
             em.persist(member);
 
             tx.commit(); // 커밋 시 insert 쿼리가 나간다.
