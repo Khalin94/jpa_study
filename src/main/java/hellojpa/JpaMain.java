@@ -33,8 +33,11 @@ public class JpaMain {
 
             em.persist(movie);
 
-            Movie findMovie = em.find(Movie.class, movie.getId());
-            System.out.println(findMovie.toString());
+            em.flush();
+            em.clear();
+
+            Item findMovie = em.find(Item.class, movie.getId());
+            System.out.println("find movie : " + findMovie.toString());
 
             tx.commit(); // 커밋 시 insert 쿼리가 나간다.
         }catch (Exception e){
