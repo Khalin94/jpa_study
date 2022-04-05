@@ -3,8 +3,8 @@ package hellojpa;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED) // @inheritance를 사용하지 않으면 ITEM 컬럼에 다 들어가게 되는 Single Table 전략이 사용된다.
-@DiscriminatorColumn // 상속받은 엔티티가 들어갈 수 있는 DTYPE(default) 컬럼이 생성된다 name 속성으로 변경가능
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // Single Table 전략
+//@DiscriminatorColumn // single table 전략의 경우 @DiscriminatorColumn이 없어도 자동으로 생성된다.
 public class Item {
 
     @Id

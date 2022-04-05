@@ -29,4 +29,12 @@ public class Movie extends Item{
     public void setActor(String actor) {
         this.actor = actor;
     }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "director='" + director + '\'' +
+                ", actor='" + actor + '\'' +
+                "} " + super.toString();
+    }
 }
