@@ -25,21 +25,14 @@ public class JpaMain {
 
             System.out.println("start >> ");
 
-            Member member = new Member();
-            member.setName("member1");
+            Movie movie = new Movie();
+            movie.setName("movie Nmae");
+            movie.setActor("scott");
+            movie.setDirector("james");
+            movie.setPrice(20000);
 
-            em.persist(member);
+            em.persist(movie);
 
-            Product product = new Product();
-            product.setName("product1");
-
-            em.persist(product);
-
-            MemberProduct memberProduct = new MemberProduct();
-            memberProduct.setMember(member);
-            memberProduct.setProduct(product);
-
-            em.persist(memberProduct);
 
             tx.commit(); // 커밋 시 insert 쿼리가 나간다.
         }catch (Exception e){
