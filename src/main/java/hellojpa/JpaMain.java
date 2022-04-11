@@ -1,6 +1,7 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class JpaMain {
@@ -25,19 +26,21 @@ public class JpaMain {
 
             System.out.println("start >> ");
 
-            Movie movie = new Movie();
-            movie.setName("movie Nmae");
-            movie.setActor("scott");
-            movie.setDirector("james");
-            movie.setPrice(20000);
+            Member member = new Member();
+            member.setName("user1");
+            member.setCreatedBy("create user");
+            member.setCreatedDate(LocalDateTime.now());
 
-            em.persist(movie);
+            Product product = new Product();
+            product.setName("product1");
+            product.setCreatedBy("created user");
+            product.setCreatedDate(LocalDateTime.now());
+
+            em.persist(member);
+            em.persist(product);
 
             em.flush();
             em.clear();
-
-            Item findMovie = em.find(Item.class, movie.getId());
-            System.out.println("find movie : " + findMovie.toString());
 
             tx.commit(); // 커밋 시 insert 쿼리가 나간다.
         }catch (Exception e){

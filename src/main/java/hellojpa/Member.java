@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Member {
+public class Member extends BasedEntity{ // BasedEntity를 상속 받아 필드를 직접생성하지 않아도 공통으로 들어갈 필드가 생성된다.
 
     @Id
     @GeneratedValue
