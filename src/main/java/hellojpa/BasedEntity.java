@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 // MappedSuperclass 어노테이션이 있는 클래스를 상속받으면 상속받은 객체는 해당 필드를 생성하지 않아도 자동으로 생성된다.
 // 재사용성? 측면에서 좋다.
 @MappedSuperclass
-public class BasedEntity {
+public abstract class BasedEntity { // 추상클래스로 생성하는 것이 좋다.
 
     @Column(name = "CREATED_NAME")
     private String createdBy;
