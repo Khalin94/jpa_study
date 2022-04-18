@@ -38,34 +38,17 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-
-            // getReference() 는 프록시 객체를 가지고 온다.
             Member findMember1 = em.getReference(Member.class, member1.getId());
-            System.out.println("findMember1 : " + findMember1.getClass());
+
+            // 프록시가 준영속상태로 되면 값을 가지고 오지 못한다
+            em.detach(findMember1);
+
             System.out.println(findMember1.getName());
-
-            // find() 실제 원본 엔티티를 가지고온다
-            Member findMember2 = em.find(Member.class, member2.getId());
-            System.out.println("findMember2 : " + findMember2.getClass());
-            System.out.println(findMember2.getName());
-
-            Member findSameMember = em.getReference(Member.class, member2.getId());
-            System.out.println("same Member : " + findSameMember.getClass());
-
-            System.out.println("==============================================");
-
-            // 실제 엔티티와 프록시 객체를 비교하므로 당연히 false;
-            System.out.println("findMember1 == findMember2 : " + (findMember1 == findMember2));
-
-            System.out.println(" instanceof 비교 : " + ((findMember1 instanceof Member) && (findMember2 instanceof Member)));
-
-            // 같은 멤버에 대해서 jpa가 서로 같음을 보장해준다.
-            System.out.println("findMember2 == findSamemember : " + (findMember2 == findSameMember));
-
 
             tx.commit(); // 커밋 시 insert 쿼리가 나간다.
         }catch (Exception e){
             tx.rollback();
+            e.printStackTrace();
         }finally {
             em.close();
         }
