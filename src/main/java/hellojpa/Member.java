@@ -19,20 +19,6 @@ public class Member extends BasedEntity{ // BasedEntity를 상속 받아 필드�
     @ManyToOne
     private Team team;
 
-    @OneToOne
-    @JoinColumn(name = "LOCKER_ID")
-    private Locker locker;
-
-    @OneToMany(mappedBy = "member")
-    private List<MemberProduct> memberProduct;
-
-    public List<MemberProduct> getMemberProduct() {
-        return memberProduct;
-    }
-
-    public void setMemberProduct(List<MemberProduct> memberProduct) {
-        this.memberProduct = memberProduct;
-    }
 
     public Long getId() {
         return id;
@@ -58,11 +44,4 @@ public class Member extends BasedEntity{ // BasedEntity를 상속 받아 필드�
         this.team = team;
     }
 
-    public Locker getLocker() {
-        return locker;
-    }
-
-    public void setLocker(Locker locker) {
-        this.locker = locker;
-    }
 }

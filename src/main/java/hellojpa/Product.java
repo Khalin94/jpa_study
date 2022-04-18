@@ -14,17 +14,6 @@ public class Product extends BasedEntity{ // BasedEntity를 상속 받아 필드
     @Column(name = "NAME")
     private String name;
 
-    @OneToMany(mappedBy = "product")
-    private List<MemberProduct> memberProducts= new ArrayList<>();
-
-    public List<MemberProduct> getMemberProducts() {
-        return memberProducts;
-    }
-
-    public void setMemberProducts(List<MemberProduct> memberProducts) {
-        this.memberProducts = memberProducts;
-    }
-
     public Long getId() {
         return id;
     }

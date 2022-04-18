@@ -23,24 +23,33 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Team team = new Team();
+            team.setName("teamA");
 
-            System.out.println("start >> ");
+            em.persist(team);
 
             Member member = new Member();
-            member.setName("user1");
-            member.setCreatedBy("create user");
+            member.setName("member1");
             member.setCreatedDate(LocalDateTime.now());
-
-            Product product = new Product();
-            product.setName("product1");
-            product.setCreatedBy("created user");
-            product.setCreatedDate(LocalDateTime.now());
+            member.setTeam(team);
 
             em.persist(member);
-            em.persist(product);
 
             em.flush();
             em.clear();
+
+//            Member findMember = em.find(Member.class, member.getId());
+            // em.getReference 로 가지고 올 시 실제 Member 객체를 주는 것이 아님.
+            // jpa 가 proxy 객체를 만들어서 보여주는 것
+            // 프록시 객체는 origin 객체를 상속받아서 가지고 온다.
+            Member findMember = em.getReference(Member.class, member.getId()); // getReference : class hellojpa.Member$HibernateProxy$pdPvfM28
+            System.out.println("getReference : " + findMember.getClass());
+
+            // 실제로 값을 가지고 올 때 쿼리가 나간다.
+            System.out.println(findMember.getName());
+//            System.out.println("============================");
+//            Team findTeam = findMember.getTeam();
+//            System.out.println(findTeam.getName());
 
             tx.commit(); // 커밋 시 insert 쿼리가 나간다.
         }catch (Exception e){
