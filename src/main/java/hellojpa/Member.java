@@ -1,6 +1,7 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,13 +20,14 @@ public class Member extends BasedEntity{ // BasedEntity를 상속 받아 필드�
     @ManyToOne
     private Team team;
 
+    @Embedded // 다른 엔티티에서도 많이 사용될 것 같은 객체는 뽑아서 사용할 수 있도록 따로 뽑아낸 후 @Embedded 어노테이션을 붙혀준다.
+    private Period workPeriod;
+
+    @Embedded
+    private Address workAddress;
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -44,4 +46,19 @@ public class Member extends BasedEntity{ // BasedEntity를 상속 받아 필드�
         this.team = team;
     }
 
+    public Period getWorkPeriod() {
+        return workPeriod;
+    }
+
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
+    }
+
+    public Address getWorkAddress() {
+        return workAddress;
+    }
+
+    public void setWorkAddress(Address workAddress) {
+        this.workAddress = workAddress;
+    }
 }
