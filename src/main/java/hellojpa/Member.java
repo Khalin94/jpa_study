@@ -26,6 +26,13 @@ public class Member extends BasedEntity{ // BasedEntity를 상속 받아 필드�
     @Embedded
     private Address workAddress;
 
+    @Embedded
+    // AttributeOverrides를 통해서 한 엔티티에서 같은 임베디드 타입을 사용할 수 있다.
+    @AttributeOverrides({@AttributeOverride(name = "city", column = @Column(name = "HOME_CITY")),
+                                @AttributeOverride(name = "street", column = @Column(name = "HOME_STREET")),
+                                @AttributeOverride(name = "zipcode", column = @Column(name = "HOME_ZIPCODE"))})
+    private Address homeAddress;
+
     public Long getId() {
         return id;
     }
@@ -60,5 +67,13 @@ public class Member extends BasedEntity{ // BasedEntity를 상속 받아 필드�
 
     public void setWorkAddress(Address workAddress) {
         this.workAddress = workAddress;
+    }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
     }
 }
